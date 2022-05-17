@@ -1,32 +1,26 @@
 exports = module.exports = function (io) {
 
     const Message = require("../models/message")
+    const User = require("../models/user")
 
-    const activeUsers = new Map();
-
+    // Setting up the connection to socket IO
     io.on("connection", (socket) => {
 
         // initialize newly joined user
-        socket.on("initialization", async (user) => {
+        socket.on("initialization", async () => {
 
-            if (!activeUsers.has(user.id)) {
-                activeUsers.set(user.id, user.username);
-            }
+            // Get user details from the database
+            const users = await User.find({}).sort([["status", -1]]).select("username signature status");
 
             try {
 
                 const list = await Message.find({})
 
-                const users = Array.from(activeUsers, ([id, username]) => ({
-                    id,
-                    username
-                }));
-
                 io.emit("updateUserList", users)
                 io.emit("updateMessageboard", list)
 
             } catch (error) {
-
+                console.log(error)
             }
 
         })
@@ -52,15 +46,11 @@ exports = module.exports = function (io) {
         })
 
 
-        socket.on("userDisconnect", (userId) => {
+        socket.on("userDisconnect", async () => {
             console.log("Disconnected")
 
-            activeUsers.delete(userId);
-
-            const users = Array.from(activeUsers, ([id, username]) => ({
-                id,
-                username
-            }));
+            /// Get user details from the database
+            const users = await User.find({}).sort([["status", -1]]).select("username signature status");;
 
             io.emit("updateUserList", users);
 

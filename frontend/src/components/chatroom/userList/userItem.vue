@@ -1,8 +1,9 @@
 <template>
-  <div id="user-item">
-    <div class="p-1 d-flex align-items-center">
-      {{ user.username }}<i class="bi bi-person-fill mx-2" v-if="owned"></i>
+  <div id="user-item" class="my-3">
+    <div class="d-flex align-items-center">
+      <i class="bi bi-circle-fill user-status me-2 text-online" v-if="user.status === 1"></i>{{ user.username }}
     </div>
+    <span class="text-secondary user-title">{{ user.signature }}</span>
   </div>
 </template>
 

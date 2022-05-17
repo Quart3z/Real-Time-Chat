@@ -1,15 +1,15 @@
 <template>
-    <div id="login" class="p-3">
+    <div id="login" class="p-2">
         <form id="login_form" v-on:submit.prevent>
-            <div class="mb-3">
+            <div class="mb-2">
                 <label class="form-label">Username</label>
                 <input type="text" v-bind:class="{'form-control': true, 'is-invalid': feedback !== ''}" v-model="credentials[0]">
             </div>
-            <div class="mb-3">
+            <div class="mb-2">
                 <label class="form-label">Password</label>
                 <input type="password" v-bind:class="{'form-control': true, 'is-invalid': feedback !== ''}" v-model="credentials[1]">
             </div>
-            <div class="mb-3">
+            <div class="mt-3">
                 <div class="invalid-feedback d-block mb-3">{{ feedback }}</div>
                 <button class="btn btn-primary" v-on:click="login">Log in</button>
             </div>

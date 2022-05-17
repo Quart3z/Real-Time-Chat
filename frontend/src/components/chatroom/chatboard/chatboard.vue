@@ -1,12 +1,12 @@
 <template>
-    <div id="chatboard" class="col-9">
-        <div id="chat-area" class="border chat-area">
+    <div id="chatboard" class="w-75 p-3">
+        <div id="chat-area" class="border rounded-2 chat-area">
             <Balloon v-for="(m, index) in messageBoard" :key="index" :message="m" :owned="isOwner(m.user.userId)" />
         </div>
-        <div class="py-3 message-area">
-            <div class="input-group mb-3">
+        <div class="pt-3 message-area">
+            <div class="input-group">
                 <input type="text" class="form-control" v-model="message" v-on:keyup.enter="sendMessage">
-                <button class="btn btn-outline-secondary" type="button" v-on:click="sendMessage">Send</button>
+                <a class="input-group-text" v-on:click="sendMessage"><i class="bi bi-send-fill fs-5"></i></a>
             </div>
         </div>
     </div>

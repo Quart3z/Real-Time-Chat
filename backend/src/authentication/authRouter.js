@@ -9,6 +9,7 @@ router.use(express.json())
 
 const User = require("../models/user")
 
+// Displaying the page
 router.get("/", (req, res) => {
     res.redirect("/")
 })
@@ -27,6 +28,7 @@ router.post("/login", async (req, res) => {
         username
     }).lean();
 
+    // If user doesn't exists
     if (!user) {
         return res.json({
             status: "fail",
@@ -38,9 +40,24 @@ router.post("/login", async (req, res) => {
         // Check for password hashing
         if (await bcrypt.compare(password, user.password)) {
 
+            // Update the user status to 1 (online)
+            User.updateOne({
+                _id: {
+                    $eq: user._id
+                }
+            }, {
+                "status": 1
+            }, (err, doc) => {
+                if (err) {
+                    console.log(err)
+                }
+            })
+
             const token = jwt.sign({
                 id: user._id,
-                username: user.username
+                username: user.username,
+                signature: user.signature,
+                status: user.status
             }, JWT_SECRET);
 
             return res.json({
@@ -88,7 +105,7 @@ router.post("/register", async (req, res) => {
         });
 
     } catch (error) {
-
+        console.log(error)
         if (error.code === 11000) {
             return res.json({
                 status: "fail",
@@ -104,7 +121,20 @@ router.post("/register", async (req, res) => {
 });
 
 // Logout
-router.get("/logout", async (req, res) => {
+router.post("/logout", async (req, res) => {
+
+    // Update the user status to 0
+    User.updateOne({
+        _id: {
+            $eq: req.body.userId
+        }
+    }, {
+        "status": 0
+    }, (err, doc) => {
+        if (err) {
+            console.log(err)
+        }
+    })
 
     return res.json({
         status: "success",

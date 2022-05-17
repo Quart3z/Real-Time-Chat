@@ -10,12 +10,4 @@ router.use(express.json())
 const User = require("../models/user")
 
 
-// Main
-// router.get("/", (req, res) => {
-
-
-// })
-
-
-
 module.exports = router;

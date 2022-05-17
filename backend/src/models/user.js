@@ -7,6 +7,11 @@ const UserSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
+    signature: {
+        type: String,
+        required: false,
+        default: "I'm the greatest person alive!"
+    },
     email: {
         type: String,
         required: true,
@@ -16,6 +21,10 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    status: {
+        type: Number,
+        default: 0
+    }
 
 }, {
     collection: "Users"

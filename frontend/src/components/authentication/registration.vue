@@ -1,27 +1,27 @@
 <template>
-    <div id="registration" class="p-3">
+    <div id="registration" class="p-2">
         <form id="registration_form" v-on:submit.prevent="register">
-            <div class="form-group mb-3">
+            <div class="form-group mb-2">
                 <label class="form-label">Username</label>
                 <input type="text" v-bind:class="{'form-control': true, 'is-invalid': feedbacks[0] !== ''}" v-model="credentials[0]">
                 <div class="invalid-feedback">{{ feedbacks[0] }}</div>
             </div>
-            <div class="form-group mb-3">
+            <div class="form-group mb-2">
                 <label class="form-label">Email</label>
                 <input type="text" v-bind:class="{'form-control': true, 'is-invalid': feedbacks[1] !== ''}" v-model="credentials[1]">
                 <div class="invalid-feedback">{{ feedbacks[1] }}</div>
             </div>
-            <div class="form-group mb-3">
+            <div class="form-group mb-2">
                 <label class="form-label">Password</label>
                 <input type="password" v-bind:class="{'form-control': true, 'is-invalid': feedbacks[2] !== ''}" v-model="credentials[2]">
                 <div class="invalid-feedback">{{ feedbacks[2] }}</div>
             </div>
-            <div class="form-group mb-3">
+            <div class="form-group mb-2">
                 <label class="form-label">Repeat Password</label>
                 <input type="password" v-bind:class="{'form-control': true, 'is-invalid': feedbacks[3] !== ''}" v-model="credentials[3]">
                 <div class="invalid-feedback">{{ feedbacks[3] }}</div>
             </div>
-            <div class="form-group mb-3">
+            <div class="form-group mt-3">
                 <button type="submit" class="btn btn-primary">Register</button>
             </div>
         </form>
@@ -63,12 +63,11 @@
                         this.$emit("changeTab", 1);
 
                     } else {
-
                         // Displaying error message accordingly
                         if (result.data === "username") {
                             this.feedbacks[0] = "The username already exists!";
-                        } else if (result.data[0] === "email") {
-                            this.feedbacks = "The email already exists!";
+                        } else if (result.data === "email") {
+                            this.feedbacks[1] = "The email already exists!";
                         }
 
                     }

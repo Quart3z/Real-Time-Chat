@@ -1,4 +1,12 @@
 .chat-area {
-    height: 75vh;
+    height: 78vh;
     overflow-y: scroll
+}
+
+.user-status {
+    font-size: 8px;
+}
+
+.text-online {
+    color: #65c74f
 }
