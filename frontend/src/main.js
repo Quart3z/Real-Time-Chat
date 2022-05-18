@@ -17,7 +17,7 @@ import router from "./router.js";
 import VueSocketIO from 'vue-3-socket.io'
 import SocketIO from 'socket.io-client'
 
-const socketConnection = SocketIO('http://localhost:8080');
+const socketConnection = SocketIO(window.location.host);
 
 createApp(App)
     .use(new VueSocketIO({
